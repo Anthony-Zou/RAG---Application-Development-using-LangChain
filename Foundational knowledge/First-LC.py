@@ -53,7 +53,7 @@ def demosimple2():
     )
     chain = prompt | model  # LCEL langchain expression language
 
-    print(chain.invoke({"name": "Qin Shihuang"}).content)
+    print(chain.invoke({"name": "Abraham Lincoln"}).content)
 
 
 if __name__ == "__main__":
