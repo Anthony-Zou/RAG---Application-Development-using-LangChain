@@ -1,0 +1,92 @@
+[
+    {
+      "Year": 1970,
+      "Gold Usd": {
+         "ozt": "37"
+      },
+      "DJIA USD": "839",
+      "DJIA XAU": 22.7,
+      "World GDP USD": 3.3,
+      "World GDP XAU": 89.2
+   },
+    {
+      "Year": 1975,
+      "Gold Usd": {
+         "ozt": "140"
+      },
+      "DJIA USD": "852",
+      "DJIA XAU": 6.1,
+      "World GDP USD": 6.4,
+      "World GDP XAU": 45.7
+   },
+    {
+      "Year": 1980,
+      "Gold Usd": {
+         "ozt": "590"
+      },
+      "DJIA USD": "964",
+      "DJIA XAU": 1.6,
+      "World GDP USD": 11.8,
+      "World GDP XAU": 20
+   },
+    {
+      "Year": 1985,
+      "Gold Usd": {
+         "ozt": "327"
+      },
+      "DJIA USD": "1,547",
+      "DJIA XAU": 4.7,
+      "World GDP USD": 13,
+      "World GDP XAU": 39.8
+   },
+    {
+      "Year": 1990,
+      "Gold Usd": {
+         "ozt": "391"
+      },
+      "DJIA USD": "2,634",
+      "DJIA XAU": 6.7,
+      "World GDP USD": 22.2,
+      "World GDP XAU": 56.8
+   },
+    {
+      "Year": 1995,
+      "Gold Usd": {
+         "ozt": "387"
+      },
+      "DJIA USD": "5,117",
+      "DJIA XAU": 13.2,
+      "World GDP USD": 29.8,
+      "World GDP XAU": 77
+   },
+    {
+      "Year": 2000,
+      "Gold Usd": {
+         "ozt": "273"
+      },
+      "DJIA USD": "10,787",
+      "DJIA XAU": 39.5,
+      "World GDP USD": 31.9,
+      "World GDP XAU": 116.8
+   },
+    {
+      "Year": 2005,
+      "Gold Usd": {
+         "ozt": "513"
+      },
+      "DJIA USD": "10,718",
+      "DJIA XAU": 20.9,
+      "World GDP USD": 45.1,
+      "World GDP XAU": 87.9
+   },
+    {
+      "Year": 2010,
+      "Gold Usd": {
+         "ozt": "1,410"
+      },
+      "DJIA USD": "11,578",
+      "DJIA XAU": 8.2,
+      "World GDP USD": 63.2,
+      "World GDP XAU": 44.8
+   }
+   ]
