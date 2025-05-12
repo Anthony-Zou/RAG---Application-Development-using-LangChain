@@ -8,11 +8,32 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain_google_genai import ChatGoogleGenerativeAI
 import streamlit as st
 import time
+from dotenv import load_dotenv
 
+# Try to load environment variables from .env file (for local development)
+load_dotenv()
+
+# Get API key from environment variable or Streamlit secrets
+
+
+def get_api_key():
+    # First, check for API key in Streamlit secrets (for deployment)
+    if hasattr(st, 'secrets') and 'GOOGLE_API_KEY' in st.secrets:
+        return st.secrets['GOOGLE_API_KEY']
+    # Then, check environment variables (for local development)
+    elif 'GOOGLE_API_KEY' in os.environ:
+        return os.environ['GOOGLE_API_KEY']
+    # If no key is found, return None
+    else:
+        return None
+
+
+# Initialize LLM with API key
+api_key = get_api_key()
 llm = ChatGoogleGenerativeAI(
     model="gemini-2.0-flash",
     temperature=0.0,
-    google_api_key=os.getenv("GOOGLE_API_KEY"))
+    google_api_key=api_key)
 
 
 def process_docx(docx_file):
