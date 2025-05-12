@@ -31,6 +31,47 @@ def get_api_key():
         return None
 
 
+# Add a helper function for consistent navigation sidebar
+def add_navigation_sidebar():
+    if not st.session_state['user_authenticated']:
+        return
+
+    st.sidebar.success(f"Logged in as: {st.session_state['user_email']}")
+    if st.session_state['subscription_end_date']:
+        days_left = (
+            st.session_state['subscription_end_date'] - datetime.now()).days
+        st.sidebar.info(f"Subscription active: {days_left} days remaining")
+
+    st.sidebar.markdown("## Navigation")
+
+    # Dashboard button
+    if st.sidebar.button("Dashboard", key="nav_dashboard"):
+        st.session_state['current_page'] = "dashboard"
+        st.rerun()
+
+    # Resume Analysis button
+    if st.sidebar.button("Resume Analysis", key="nav_resume_analysis"):
+        st.session_state['current_page'] = "resume_analysis"
+        st.rerun()
+
+    # Resume Generator button
+    if st.sidebar.button("Resume Generator", key="nav_resume_generator"):
+        st.session_state['current_page'] = "resume_generator"
+        st.rerun()
+
+    # Cover Letter Generator button
+    if st.sidebar.button("Cover Letter Generator", key="nav_cover_letter"):
+        st.session_state['current_page'] = "cover_letter_generator"
+        st.rerun()
+
+    st.sidebar.markdown("---")
+
+    if st.sidebar.button("Log Out", key="nav_logout"):
+        for key in st.session_state.keys():
+            del st.session_state[key]
+        st.rerun()
+
+
 # Initialize LLM with API key
 api_key = get_api_key()
 llm = ChatGoogleGenerativeAI(
@@ -324,64 +365,69 @@ def show_subscription_page():
                 st.rerun()
 
 
-# Dashboard
+# Update Dashboard - remove redundant navigation
 def show_dashboard():
-    st.sidebar.success(f"Logged in as: {st.session_state['user_email']}")
-    if st.session_state['subscription_end_date']:
-        days_left = (
-            st.session_state['subscription_end_date'] - datetime.now()).days
-        st.sidebar.info(f"Subscription active: {days_left} days remaining")
-
-    st.sidebar.markdown("## Navigation")
-    if st.sidebar.button("Resume Analysis"):
-        st.session_state['current_page'] = "resume_analysis"
-        st.rerun()
-
-    if st.sidebar.button("Resume Generator"):
-        st.session_state['current_page'] = "resume_generator"
-        st.rerun()
-
-    if st.sidebar.button("Cover Letter Generator"):
-        st.session_state['current_page'] = "cover_letter_generator"
-        st.rerun()
-
-    if st.sidebar.button("Log Out"):
-        for key in st.session_state.keys():
-            del st.session_state[key]
-        st.rerun()
+    # Use the common navigation sidebar
+    add_navigation_sidebar()
 
     st.markdown('<div class="title-container"><h1>Welcome to CareerCompass Pro</h1><p>Your all-in-one career toolkit</p></div>', unsafe_allow_html=True)
 
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.markdown("""
-        <div style="border:1px solid #ddd; padding: 20px; border-radius: 10px; text-align: center; cursor: pointer;">
-            <h3>Resume Analysis</h3>
-            <p>Get detailed feedback on your current resume</p>
-        </div>
-        """, unsafe_allow_html=True)
+        # Make the cards clickable
+        card1 = st.container()
+        with card1:
+            st.markdown("""
+            <div style="border:1px solid #ddd; padding: 20px; border-radius: 10px; text-align: center; cursor: pointer;">
+                <h3>Resume Analysis</h3>
+                <p>Get detailed feedback on your current resume</p>
+            </div>
+            """, unsafe_allow_html=True)
+            if st.button("Go to Resume Analysis", key="goto_resume_analysis"):
+                st.session_state['current_page'] = "resume_analysis"
+                st.rerun()
 
     with col2:
-        st.markdown("""
-        <div style="border:1px solid #ddd; padding: 20px; border-radius: 10px; text-align: center; cursor: pointer;">
-            <h3>Resume Generator</h3>
-            <p>Create an optimized version of your resume</p>
-        </div>
-        """, unsafe_allow_html=True)
+        card2 = st.container()
+        with card2:
+            st.markdown("""
+            <div style="border:1px solid #ddd; padding: 20px; border-radius: 10px; text-align: center; cursor: pointer;">
+                <h3>Resume Generator</h3>
+                <p>Create an optimized version of your resume</p>
+            </div>
+            """, unsafe_allow_html=True)
+            if st.button("Go to Resume Generator", key="goto_resume_generator"):
+                st.session_state['current_page'] = "resume_generator"
+                st.rerun()
 
     with col3:
-        st.markdown("""
-        <div style="border:1px solid #ddd; padding: 20px; border-radius: 10px; text-align: center; cursor: pointer;">
-            <h3>Cover Letter Generator</h3>
-            <p>Generate targeted cover letters</p>
-        </div>
-        """, unsafe_allow_html=True)
+        card3 = st.container()
+        with card3:
+            st.markdown("""
+            <div style="border:1px solid #ddd; padding: 20px; border-radius: 10px; text-align: center; cursor: pointer;">
+                <h3>Cover Letter Generator</h3>
+                <p>Generate targeted cover letters</p>
+            </div>
+            """, unsafe_allow_html=True)
+            if st.button("Go to Cover Letter Generator", key="goto_cover_letter"):
+                st.session_state['current_page'] = "cover_letter_generator"
+                st.rerun()
 
 
 # Resume Generator Page
 def show_resume_generator():
+    # Use the common navigation sidebar
+    add_navigation_sidebar()
+
     st.markdown('<div class="title-container"><h1>Resume Generator</h1><p>Create an optimized version of your resume</p></div>', unsafe_allow_html=True)
+
+    # Add a back button to return to dashboard
+    col_back, col_spacer = st.columns([1, 5])
+    with col_back:
+        if st.button("← Back to Dashboard", key="back_to_dashboard_from_generator"):
+            st.session_state['current_page'] = "dashboard"
+            st.rerun()
 
     uploaded_file = st.file_uploader(
         "Upload your current resume", type=["pdf", "docx"])
@@ -414,7 +460,17 @@ def show_resume_generator():
 
 # Cover Letter Generator Page
 def show_cover_letter_generator():
+    # Use the common navigation sidebar
+    add_navigation_sidebar()
+
     st.markdown('<div class="title-container"><h1>Cover Letter Generator</h1><p>Create targeted cover letters for specific job applications</p></div>', unsafe_allow_html=True)
+
+    # Add a back button to return to dashboard
+    col_back, col_spacer = st.columns([1, 5])
+    with col_back:
+        if st.button("← Back to Dashboard", key="back_to_dashboard_from_cover_letter"):
+            st.session_state['current_page'] = "dashboard"
+            st.rerun()
 
     uploaded_file = st.file_uploader(
         "Upload your resume", type=["pdf", "docx"])
@@ -543,8 +599,18 @@ def main():
 
 # Rename the original functionality to show_resume_analysis
 def show_resume_analysis():
+    # Use the common navigation sidebar
+    add_navigation_sidebar()
+
     # Header
     st.markdown('<div class="title-container"><h1>Resume Analysis</h1><p>Get detailed feedback on your current resume</p></div>', unsafe_allow_html=True)
+
+    # Add a back button to return to dashboard
+    col_back, col_spacer = st.columns([1, 5])
+    with col_back:
+        if st.button("← Back to Dashboard", key="back_to_dashboard_from_analysis"):
+            st.session_state['current_page'] = "dashboard"
+            st.rerun()
 
     # Main content area with two columns
     col1, col2 = st.columns([1, 2])
