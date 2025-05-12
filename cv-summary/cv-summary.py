@@ -19,12 +19,13 @@ load_dotenv()
 
 
 def get_api_key():
-    # First, check for API key in Streamlit secrets (for deployment)
-    if hasattr(st, 'secrets') and 'GOOGLE_API_KEY' in st.secrets:
-        return st.secrets['GOOGLE_API_KEY']
+
     # Then, check environment variables (for local development)
-    elif 'GOOGLE_API_KEY' in os.environ:
+    if 'GOOGLE_API_KEY' in os.environ:
         return os.environ['GOOGLE_API_KEY']
+        # First, check for API key in Streamlit secrets (for deployment)
+    elif hasattr(st, 'secrets') and 'GOOGLE_API_KEY' in st.secrets:
+        return st.secrets['GOOGLE_API_KEY']
     # If no key is found, return None
     else:
         return None
