@@ -61,7 +61,7 @@ def process_pdf(pdf_file):
 def main():
     # Set page configuration
     st.set_page_config(
-        page_title="CareerCompass AI",  # Updated app name
+        page_title="CareerCompass Pro",  # Updated app name
         page_icon="📊",
         layout="wide",
         initial_sidebar_state="expanded"
@@ -125,12 +125,12 @@ def main():
     """, unsafe_allow_html=True)
 
     # Header
-    st.markdown('<div class="title-container"><h1>CareerCompass AI</h1><p>Advanced career insights & personalized resume analysis</p></div>', unsafe_allow_html=True)
+    st.markdown('<div class="title-container"><h1>CareerCompass Pro</h1><p>Advanced career insights & personalized resume analysis</p></div>', unsafe_allow_html=True)
 
     # Sidebar for instructions and tips
     with st.sidebar:
         st.image("https://img.icons8.com/clouds/100/document.png", width=100)
-        st.markdown("## CareerCompass AI")
+        st.markdown("## CareerCompass Pro")
         st.info("""
         1. Upload your resume (PDF or DOCX)
         2. Our AI will analyze your professional profile
